@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#244f43">
+  <meta name="description" content="Your own fitting room. Explore everyday essentials with private, browser-based virtual try-on.">
+  <title>Thread — Your virtual fitting room</title>
+  <link rel="icon" href="/static/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/style.css">
+  <script type="module" src="/static/app.js"></script>
+</head>
+<body>
+  <svg class="icon-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M8 6l2-3h4l2 3h4a2 2 0 012 2v11a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2z"/><circle cx="12" cy="13" r="4"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6l6 6-6 6"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V6a4 4 0 018 0v4m-4 5v2"/></symbol>
+    <symbol id="i-shirt" viewBox="0 0 24 24"><path d="M8 3L2 7l3 5 3-2v11h8V10l3 2 3-5-6-4c0 4-8 4-8 0z"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l4 4L19 6"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9a3 3 0 016 0c0 2-3 2-3 5m0 3h.01"/></symbol>
+  </defs></svg>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Thread home"><span class="brand-mark">t.</span>thread<span class="brand-dot">®</span></a>
+    <div class="header-divider"></div><span class="header-label">THE FITTING STUDIO</span>
+    <button class="text-button help-button" id="open-help"><svg class="icon"><use href="#i-help"/></svg>How it works</button>
+  </header>
+  <main>
+    <section class="intro">
+      <div><div class="eyebrow"><span class="tiny-line"></span> A LITTLE TECH. A BETTER FIT.</div><h1>Your style. <em>Your space.</em></h1><p>Find your everyday favorite, without the changing room.</p></div>
+      <span class="private-badge"><svg class="icon"><use href="#i-lock"/></svg> Just you &amp; your browser</span>
+    </section>
+
+    <div class="studio-layout">
+      <section class="fitting-section" aria-labelledby="room-title">
+        <div class="section-heading"><h2 id="room-title">Your virtual fitting room</h2><span class="session-label"><span class="status-dot" id="camera-dot"></span><span id="camera-label">Camera off</span></span></div>
+        <div class="camera-stage" id="camera-stage">
+          <div class="video-frame" id="video-frame" hidden><video id="video" autoplay playsinline muted></video><canvas id="overlay" aria-label="Virtual shirt overlay"></canvas></div>
+          <div class="stage-top"><span class="studio-chip"><svg class="icon"><use href="#i-spark"/></svg> VIRTUAL TRY-ON</span><span class="mirror-chip" id="mirror-chip" hidden>Mirrored view</span></div>
+          <div class="camera-welcome" id="camera-welcome">
+            <div class="body-guide" aria-hidden="true"><span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span><svg viewBox="0 0 220 220"><circle cx="110" cy="57" r="27"/><path d="M54 191v-53c0-24 19-43 43-43h26c24 0 43 19 43 43v53M77 145v46m66-46v46"/><path class="guide-dash" d="M35 124h150M110 22v177"/></svg><span class="guide-point left"></span><span class="guide-point right"></span></div>
+            <h3>A fitting room, wherever you are.</h3><p>Position yourself in front of the camera.<br>We’ll take care of the fit.</p>
+            <button class="primary-button" id="start-camera"><svg class="icon"><use href="#i-camera"/></svg><span>Start camera</span><svg class="icon arrow"><use href="#i-arrow"/></svg></button>
+            <span class="permission-note">Your camera starts only when you’re ready.</span>
+          </div>
+          <div class="pose-message" id="pose-message" role="status" hidden>Stand back until your shoulders and hips are visible.</div>
+          <div class="stage-bottom"><span id="stage-caption">A new way to find your fit</span><button class="stop-button" id="stop-camera" hidden>Stop camera</button><span class="stage-number" id="stage-number">01 / YOUR SPACE</span></div>
+        </div>
+        <div class="error-message" id="error-message" role="alert" hidden></div>
+        <div class="camera-toolbar"><span><span class="status-dot" id="body-dot"></span><span id="body-label">Waiting for camera</span></span><label class="switch-label"><input type="checkbox" id="show-guides" role="switch"><span class="switch"></span>Show tracking</label></div>
+        <div class="quick-tips"><div><span>01</span><p>Stand 1–2 meters away</p></div><div><span>02</span><p>Keep your torso visible</p></div><div><span>03</span><p>Face the camera</p></div></div>
+        <p class="privacy-note"><svg class="icon"><use href="#i-lock"/></svg>Your camera feed is processed locally in your browser. No camera images are uploaded.</p>
+      </section>
+
+      <aside class="wardrobe" aria-labelledby="wardrobe-title">
+        <div class="section-heading"><h2 id="wardrobe-title">Meet your next essential</h2><span class="item-count">04 STYLES</span></div>
+        <div class="collection-label"><span>THE EVERYDAY COLLECTION</span><span>Made for your rotation.</span></div>
+        <div id="products" class="product-grid"></div>
+        <div class="fit-controls">
+          <div class="size-heading"><label>Your size</label><button class="text-button" id="open-size-guide">Size guide <span>↗</span></button></div>
+          <div id="size-options" class="size-options" role="group" aria-label="Select shirt size"></div>
+          <div class="selection-summary"><span id="selected-description">Black T-Shirt · M</span><span id="selected-price">₹799</span></div>
+          <button class="primary-button try-button" id="try-on"><svg class="icon"><use href="#i-shirt"/></svg><span>Try on this shirt</span><svg class="icon arrow"><use href="#i-arrow"/></svg></button>
+          <p id="try-hint" class="try-hint" role="status">Start your camera to see it on you.</p>
+        </div>
+      </aside>
+    </div>
+
+    <section class="measurements" aria-labelledby="measure-title">
+      <div class="measurement-title"><span class="spark-box"><svg class="icon"><use href="#i-spark"/></svg></span><div><h2 id="measure-title">A little help finding your fit</h2><p>AI-assisted approximate sizing</p></div><span class="approx-badge">ESTIMATES ONLY</span></div>
+      <div class="measurement-grid">
+        <div class="height-field"><label for="height">YOUR HEIGHT</label><div class="height-input"><input id="height" type="number" value="168" min="100" max="230" step="1" inputmode="numeric" aria-describedby="height-hint"><span>cm</span></div><small id="height-hint">Enter your height to personalize sizing.</small></div>
+        <div class="metric"><span>SHOULDER WIDTH</span><strong id="shoulder-value">— <small>cm</small></strong><small>Across your shoulders</small></div>
+        <div class="metric"><span>TORSO / HIP WIDTH</span><strong id="torso-value">— / — <small>cm</small></strong><small id="measurement-method">Waiting for a reliable pose</small></div>
+        <div class="metric recommended"><span>RECOMMENDED SIZE</span><div><strong id="recommended-size">—</strong><button id="use-recommended" class="text-button" disabled>Use size <span>↗</span></button></div><small>You can always choose your own.</small></div>
+      </div>
+      <p class="measurement-disclaimer">A starting point, not a tape measure. Webcam estimates vary with posture, camera angle, and distance. Check the size guide for your best fit.</p>
+    </section>
+    <footer><span class="footer-brand">thread.</span><p>Good basics. Better decisions.</p><span>VIRTUAL FITTING STUDIO · PROTOTYPE</span></footer>
+  </main>
+
+  <dialog id="help-dialog" aria-labelledby="help-title"><button class="dialog-close" data-close aria-label="Close instructions">×</button><div class="eyebrow">YOUR FIT, IN THREE STEPS</div><h2 id="help-title">Make yourself at home.</h2><ol><li><strong>Let the camera in.</strong> Click Start camera and allow access in your browser. Use good lighting and stand 1–2 meters away.</li><li><strong>Find your frame.</strong> Face forward with your shoulders and hips visible. Enter your height. For a better estimate, include your head and feet and stand upright.</li><li><strong>Try something on.</strong> Pick a color and size, then click Try on. Move naturally, switch colors, or remove the shirt without stopping the camera.</li></ol><p>This is a 2D visual preview, not a simulation of fabric or garment fit. Sample garments and prices are for this prototype.</p><p>Camera processing stays in your browser. The pose engine downloads on first use, so an internet connection is needed.</p></dialog>
+  <dialog id="size-dialog" aria-labelledby="size-title"><button class="dialog-close" data-close aria-label="Close size guide">×</button><div class="eyebrow">THE EVERYDAY COLLECTION</div><h2 id="size-title">Find your starting size.</h2><p>Illustrative body shoulder-width ranges in centimeters. These are not a manufacturer’s garment measurements.</p><table><thead><tr><th>Size</th><th>Approx. shoulder width</th></tr></thead><tbody id="size-chart"></tbody></table><p>Measured across the shoulders, not around the chest. This webcam estimate does not measure chest circumference or guarantee fit.</p></dialog>
+  <noscript><p class="noscript">Please enable JavaScript to use the virtual fitting room.</p></noscript>
+</body>
+</html>
